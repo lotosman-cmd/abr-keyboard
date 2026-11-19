@@ -236,6 +236,7 @@ class CloudKeyboardService : InputMethodService() {
         private var moved = false
         private var longDragging = false
         private var multiTouch = false
+        private var twoFingerHandled = false
         private var nextDeleteAt = 0L
         private val longPress = Runnable {
             if (stroke != null && !moved && !multiTouch) {
@@ -271,6 +272,7 @@ class CloudKeyboardService : InputMethodService() {
                     moved = false
                     longDragging = false
                     multiTouch = false
+                    twoFingerHandled = false
                     nextDeleteAt = now + 550L
                     if (paths.isNotEmpty()) {
                         mainHandler.postDelayed(longPress, 550L)
@@ -310,6 +312,7 @@ class CloudKeyboardService : InputMethodService() {
                 MotionEvent.ACTION_POINTER_UP -> {
                     if (multiTouch) {
                         enter()
+                        twoFingerHandled = true
                         multiTouch = false
                         stroke = null
                         activePath = null
@@ -359,6 +362,7 @@ class CloudKeyboardService : InputMethodService() {
                     stroke = null
                     activePath = null
                     multiTouch = false
+                    twoFingerHandled = false
                     longDragging = false
                     invalidate()
                     return true
