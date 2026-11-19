@@ -275,9 +275,7 @@ class CloudKeyboardService : InputMethodService() {
                     multiTouch = false
                     twoFingerHandled = false
                     nextDeleteAt = now + 550L
-                    if (paths.isNotEmpty()) {
-                        mainHandler.postDelayed(longPress, 550L)
-                    }
+                    mainHandler.postDelayed(longPress, 550L)
                     stroke = Ink.Stroke.builder().also {
                         it.addPoint(Ink.Point.create(event.x, event.y, now))
                     }
@@ -324,7 +322,7 @@ class CloudKeyboardService : InputMethodService() {
                 }
                 MotionEvent.ACTION_UP -> {
                     mainHandler.removeCallbacks(longPress)
-                    if (multiTouch) return true
+                    if (multiTouch || twoFingerHandled) return true
                     if (longDragging) {
                         longDragging = false
                         return true
