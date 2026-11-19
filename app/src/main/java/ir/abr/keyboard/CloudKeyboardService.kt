@@ -326,12 +326,12 @@ class CloudKeyboardService : InputMethodService() {
                         return true
                     }
                     val duration = now - downAt
-                    val distance = kotlin.math.hypot(event.x - downX, event.y - downY)
+                    val distance = kotlin.math.hypot((event.x - downX).toDouble(), (event.y - downY).toDouble())
                     if (distance < dp(10) && duration < 260L) {
                         stroke = null
                         activePath = null
                         if (now - lastTapAt < 340L &&
-                            kotlin.math.hypot(event.x - lastTapX, event.y - lastTapY) < dp(42)
+                            kotlin.math.hypot((event.x - lastTapX).toDouble(), (event.y - lastTapY).toDouble()) < dp(42).toDouble()
                         ) {
                             currentInputConnection?.commitText(" ", 1)
                             lastTapAt = 0L
