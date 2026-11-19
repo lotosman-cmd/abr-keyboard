@@ -233,6 +233,7 @@ class CloudKeyboardService : InputMethodService() {
         private var downAt = 0L
         private var lastTapAt = 0L
         private var lastTapX = 0f
+        private var lastTapY = 0f
         private var moved = false
         private var longDragging = false
         private var multiTouch = false
@@ -343,6 +344,7 @@ class CloudKeyboardService : InputMethodService() {
                             recognize()
                             lastTapAt = now
                             lastTapX = event.x
+                            lastTapY = event.y
                         } else {
                             lastTapAt = now
                             lastTapX = event.x
