@@ -274,8 +274,8 @@ class CloudKeyboardService : InputMethodService() {
                     longDragging = false
                     multiTouch = false
                     twoFingerHandled = false
-                    nextDeleteAt = now + 550L
-                    mainHandler.postDelayed(longPress, 550L)
+                    nextDeleteAt = now + 1000L
+                    mainHandler.postDelayed(longPress, 1000L)
                     stroke = Ink.Stroke.builder().also {
                         it.addPoint(Ink.Point.create(event.x, event.y, now))
                     }
@@ -346,6 +346,7 @@ class CloudKeyboardService : InputMethodService() {
                         } else {
                             lastTapAt = now
                             lastTapX = event.x
+                            lastTapY = event.y
                         }
                     } else {
                         stroke?.addPoint(Ink.Point.create(event.x, event.y, now))
