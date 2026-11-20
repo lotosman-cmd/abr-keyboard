@@ -47,7 +47,7 @@ class CloudKeyboardService : InputMethodService() {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
             setPadding(dp(10), dp(8), dp(10), dp(7))
-            background = CloudBackground()
+            setBackgroundColor(Color.TRANSPARENT)
         }
         status = TextView(this).apply {
             text = "روی ابر بنویسید؛ برای تبدیل، یک‌بار روی فضای خالی بزنید"
@@ -169,10 +169,19 @@ class CloudKeyboardService : InputMethodService() {
                             }
                             setPadding(dp(8), 0, dp(8), 0)
                             setOnClickListener {
-                                currentInputConnection?.commitText(item.text, 1)
-                                pad?.clearInk()
-                                candidates?.removeAllViews()
-                                status?.text = "ادامه دهید؛ برای فاصله دو بار ضربه بزنید."
+                                val connection = currentInputConnection
+                                if (connection == null) {
+                                    status?.text = "ارتباط با محل تایپ برقرار نیست؛ دوباره محل نوشتن را انتخاب کنید."
+                                    return@setOnClickListener
+                                }
+                                val inserted = connection.commitText(item.text, 1)
+                                if (inserted) {
+                                    pad?.clearInk()
+                                    candidates?.removeAllViews()
+                                    status?.text = "متن در محل تایپ درج شد."
+                                } else {
+                                    status?.text = "برنامه مقصد متن را نپذیرفت؛ محل تایپ را دوباره لمس کنید."
+                                }
                             }
                         }
                         candidates?.addView(choice, LinearLayout.LayoutParams(
@@ -385,7 +394,7 @@ class CloudKeyboardService : InputMethodService() {
 
     private inner class CloudSurface : Drawable() {
         private val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(225, 250, 253, 255)
+            color = Color.argb(105, 250, 253, 255)
             style = Paint.Style.FILL
         }
         private val outline = Paint(Paint.ANTI_ALIAS_FLAG).apply {
