@@ -6,11 +6,12 @@ android {
     namespace = "ir.abr.keyboard"
     compileSdk = 35
     defaultConfig {
-        applicationId = "ir.abr.keyboard"
+        // A fresh application ID avoids signature/package conflicts with earlier debug builds.
+        applicationId = "ir.abr.keyboard.v4"
         minSdk = 23
-        targetSdk = 35
-        versionCode = 3
-        versionName = "3.0"
+        targetSdk = 32
+        versionCode = 4
+        versionName = "4.0"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
